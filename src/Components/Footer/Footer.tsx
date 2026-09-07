@@ -19,6 +19,9 @@ export default function Footer() {
             edge="start"
             color="inherit"
             sx={{ mr: 2 }}
+            onClick={() => {
+              window.open("https://www.linkedin.com/in/nathan-orloff/", "_blank", "noopener,noreferrer")
+            }}
           >
             <LinkedInIcon/>
           </IconButton>
@@ -27,6 +30,9 @@ export default function Footer() {
             edge="start"
             color="inherit"
             sx={{ mr: 2 }}
+            onClick={() => {
+              window.open("https://github.com/NathanOrloff", "_blank", "noopener,noreferrer")
+            }}
           >
             <GitHubIcon/>
           </IconButton>
@@ -35,6 +41,8 @@ export default function Footer() {
             edge="start"
             color="inherit"
             sx={{ mr: 2 }}
+            role="link"
+            href='mailto:nathancorloff@gmail.com'
           >
             <EmailIcon/>
           </IconButton>
