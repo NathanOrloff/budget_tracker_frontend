@@ -20,17 +20,17 @@ function App() {
 
   if (checkingSession) {
     // todo: replace with loading spinner
-    return buildAppStructure(<div/>);
+    return buildAppStructure(setIdToken, <div/>);
   }
 
   if (!idToken) {
-    return buildAppStructure(<LoginForm onAuthenticated={(token) => setIdToken(token)} />);
+    return buildAppStructure(setIdToken, <LoginForm onAuthenticated={(token) => setIdToken(token)} />);
   }
 
-  return buildAppStructure(<Body/>);
+  return buildAppStructure(setIdToken, <Body/>);
 }
 
-function buildAppStructure(middle: React.JSX.Element): React.JSX.Element {
+function buildAppStructure(fn: any, middle: React.JSX.Element): React.JSX.Element {
   return (
     <div>
     <CssBaseline />
@@ -42,7 +42,7 @@ function buildAppStructure(middle: React.JSX.Element): React.JSX.Element {
         display: 'flex',
         flexDirection: 'column'
       }}>
-      <Header/>
+      <Header setIdToken={fn} />
       {middle}
       <Footer/>
     </Container>

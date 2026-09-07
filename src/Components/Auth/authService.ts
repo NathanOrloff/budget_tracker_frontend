@@ -2,6 +2,7 @@ import {
     AuthenticationDetails,
     CognitoUser,
     CognitoUserAttribute,
+    CognitoUserSession,
 } from "amazon-cognito-identity-js";
 import { userPool } from "./cognitoConfig";
 
@@ -49,6 +50,21 @@ export function signIn(email: string, password: string): Promise<{ idToken: stri
 
 export function getCurrentUser(): CognitoUser | null {
   return userPool.getCurrentUser();
+}
+
+export function getCurrentUserAttributes(): Promise<CognitoUserAttribute[] | null> {
+    return new Promise((resolve, reject) => {
+        const user = getCurrentUser();
+        if (!user) return resolve(null);
+        user.getSession((err: Error | null, session: CognitoUserSession) => {
+            if (err) return reject(err);
+            user.getUserAttributes((err: Error | undefined, attributes: CognitoUserAttribute[] | undefined) => {
+                if (err) return reject(err);
+                if (!attributes) return resolve(null)
+                resolve(attributes)
+            })
+        })
+    })
 }
 
 export function getCurrentSession(): Promise<string | null> {
