@@ -5,12 +5,13 @@ import { CreateLinkTokenOutput, ExchangePublicTokenInput, TransactionOutput } fr
 export const budgetAppApi = createApi({
     reducerPath: 'budgetAppApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: 'https://2kipv3tlo6.execute-api.us-west-2.amazonaws.com/prod/',
+        baseUrl: 'https://xd5zmpykkb.execute-api.us-west-2.amazonaws.com/prod/',
         prepareHeaders: async (headers, _) => {
             const token = await getCurrentSession();
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
+            headers.set('Content-Type', 'application/json');
 
             return headers;
         },

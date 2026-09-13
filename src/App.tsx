@@ -16,7 +16,7 @@ function App() {
       .then((token) => setIdToken(token))
       .catch(() => setIdToken(null))
       .finally(() => setCheckingSession(false));
-  })
+  }, []);
 
   if (checkingSession) {
     // todo: replace with loading spinner

@@ -20,7 +20,7 @@ export default function Header({ setIdToken }: HeaderParams) {
     getCurrentUserAttributes()
       .then((attributes) => setUserAttr(attributes))
       .catch((err) => console.log(err))
-  })
+  }, []);
 
   function signUserOut() {
     setIdToken(null);
