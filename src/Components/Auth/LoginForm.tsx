@@ -11,9 +11,10 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
 import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
+import PlaidButton from "./PlaidButton";
 
 
-type Mode = "signIn" | "signUp" | "confirm";
+export type Mode = "signIn" | "signUp" | "confirm" | "link";
 
 export function LoginForm({ onAuthenticated }: { onAuthenticated: (idToken: string) => void }) {
     const [mode, setMode] = useState<Mode>("signIn");
@@ -34,7 +35,7 @@ export function LoginForm({ onAuthenticated }: { onAuthenticated: (idToken: stri
                 setMode("confirm");
             } else if (mode === "confirm") {
                 await confirmSignUp(email, code);
-                setMode("signIn");
+                setMode("link");
             }
         } catch (err: any) {
             setError(err.message ?? String(err));
@@ -63,17 +64,17 @@ export function LoginForm({ onAuthenticated }: { onAuthenticated: (idToken: stri
                         gap: 2
                     }}>
                         <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-                            Login / Sign Up
+                            {mode !== 'link' ? 'Login / Sign Up' : 'Link Bank Account'}
                         </Typography>
-                        <TextField
+                        { mode !== 'link' && (<TextField
                             required
                             fullWidth
                             id="outlined-required"
                             label="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}     
-                        />
-                        { mode !== "confirm" && (
+                        />)}
+                        { mode !== "confirm" && mode !== 'link' && (
                             <TextField
                                 required
                                 fullWidth
@@ -115,13 +116,18 @@ export function LoginForm({ onAuthenticated }: { onAuthenticated: (idToken: stri
                             gap: 2,
                             justifyContent: 'center'
                         }}>
-                            <Button variant="contained" onClick={() => handleSubmit()}>
-                                {mode === "signIn" ? "Sign in" : mode === "signUp" ? "Sign up" : "Confirm"}
-                            </Button>
-                            {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
+                            {
+                                mode !== 'link' && (<Button variant="contained" onClick={() => handleSubmit()}>
+                                    {mode === "signIn" ? "Sign in" : mode === "signUp" ? "Sign up" : "Confirm"}
+                                </Button>)}
                             {
                                 mode === 'signIn' && (
                                     <Button variant="contained" onClick={() => setMode("signUp")}>Need an account?</Button>
+                                )
+                            }
+                            {
+                                mode === 'link' && (
+                                    <PlaidButton setMode={setMode}/>
                                 )
                             }
                         </Box>
@@ -136,3 +142,7 @@ export function LoginForm({ onAuthenticated }: { onAuthenticated: (idToken: stri
         </React.Fragment>
     );
 }
+
+// function createRegistrationConfig(linkToken: string) {
+//     return 
+// }

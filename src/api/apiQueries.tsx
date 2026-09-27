@@ -25,7 +25,7 @@ export const budgetAppApi = createApi({
             }),
         }),
 
-        createLinkToken: build.mutation<CreateLinkTokenOutput, string>({
+        createLinkToken: build.mutation<CreateLinkTokenOutput, void>({
             query: () => `create-link-token`
         }),
 
