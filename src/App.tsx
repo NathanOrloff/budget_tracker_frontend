@@ -6,6 +6,7 @@ import Footer from './Components/Footer/Footer';
 import Body from './Components/Body/Body';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
+import { useAccountIsRegisteredQuery } from './api/apiQueries';
 
 function App() {
   const [idToken, setIdToken] = useState<string | null>(null);
@@ -18,13 +19,18 @@ function App() {
       .finally(() => setCheckingSession(false));
   }, []);
 
-  if (checkingSession) {
+  const { data, error, isLoading } = useAccountIsRegisteredQuery();
+  
+  if (checkingSession || isLoading || error) {
     // todo: replace with loading spinner
     return buildAppStructure(setIdToken, <div/>);
   }
 
   if (!idToken) {
-    return buildAppStructure(setIdToken, <LoginForm onAuthenticated={(token) => setIdToken(token)} />);
+    return buildAppStructure(setIdToken, <LoginForm onAuthenticated={(token) => setIdToken(token)} needsLink={false}/>);
+  }
+  if (!data?.is_registered) {
+    return buildAppStructure(setIdToken, <LoginForm onAuthenticated={(token) => setIdToken(token)} needsLink={true} />);
   }
 
   return buildAppStructure(setIdToken, <Body/>);

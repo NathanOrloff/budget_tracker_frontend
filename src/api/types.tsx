@@ -18,3 +18,7 @@ export type ExchangePublicTokenInput = {
 export type CreateLinkTokenOutput = {
     link_token: string
 }
+
+export type AccountIsRegisteredOutput = {
+    is_registered: boolean
+}

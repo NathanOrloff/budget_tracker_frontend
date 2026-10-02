@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { getCurrentSession } from '../Components/Auth/authService';
-import { CreateLinkTokenOutput, ExchangePublicTokenInput, TransactionOutput } from './types';
+import { AccountIsRegisteredOutput, CreateLinkTokenOutput, ExchangePublicTokenInput, TransactionOutput } from './types';
 
 export const budgetAppApi = createApi({
     reducerPath: 'budgetAppApi',
@@ -25,6 +25,10 @@ export const budgetAppApi = createApi({
             }),
         }),
 
+        accountIsRegistered: build.query<AccountIsRegisteredOutput, void>({
+            query: () => `account-is-registered`
+        }),
+
         createLinkToken: build.mutation<CreateLinkTokenOutput, void>({
             query: () => `create-link-token`
         }),
@@ -40,6 +44,7 @@ export const budgetAppApi = createApi({
 
 export const {
     useListTransactionsQuery,
+    useAccountIsRegisteredQuery,
     useCreateLinkTokenMutation,
     useExchangePublicTokenMutation
 } = budgetAppApi

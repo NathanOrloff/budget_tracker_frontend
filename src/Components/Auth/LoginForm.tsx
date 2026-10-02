@@ -13,11 +13,15 @@ import Box from "@mui/material/Box";
 import Alert from "@mui/material/Alert";
 import PlaidButton from "./PlaidButton";
 
-
 export type Mode = "signIn" | "signUp" | "confirm" | "link";
 
-export function LoginForm({ onAuthenticated }: { onAuthenticated: (idToken: string) => void }) {
-    const [mode, setMode] = useState<Mode>("signIn");
+export type LoginFormProps = {
+     onAuthenticated: (idToken: string) => void,
+     needsLink: boolean
+}
+
+export function LoginForm({ onAuthenticated, needsLink }: LoginFormProps) {
+    const [mode, setMode] = useState<Mode>(needsLink ? "link" : "signIn");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
