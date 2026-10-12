@@ -11,6 +11,7 @@ export type TopPlacesSpentAtProps = {
 export default function TopPlacesSpentAt({ transactions }: TopPlacesSpentAtProps) {
 
     const accumulatedTransactions = transactions.reduce((map, current) => {
+        if (current.merchant_name === '') return map;
         const currentTotal = map.get(current.merchant_name) || 0;
         map.set(current.merchant_name, currentTotal + current.amount);
         return map;
