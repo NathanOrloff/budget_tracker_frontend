@@ -18,11 +18,12 @@ export const budgetAppApi = createApi({
     }),
     
     endpoints: (build) => ({
-        listTransactions: build.query<TransactionOutput, string>({
+        listTransactions: build.query<TransactionOutput[], string>({
             query: (fromDate) => ({
                 url: `transactions`,
                 params: { from_date: fromDate },
             }),
+            transformResponse: (res: { data: TransactionOutput[] | null }) => res.data ?? [],
         }),
 
         accountIsRegistered: build.query<AccountIsRegisteredOutput, void>({
