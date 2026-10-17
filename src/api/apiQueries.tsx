@@ -37,7 +37,11 @@ export const budgetAppApi = createApi({
         exchangePublicToken: build.mutation<void, ExchangePublicTokenInput>({
             query: (input) => ({
                 url: `exchange-public-token`,
-                params: { public_token:  input.public_token, institution_name: input.institution_name},
+                method: 'POST',
+                body: {
+                    public_token: input.public_token, 
+                    institution_name: input.institution_name 
+                },
             }),
         })
     }),

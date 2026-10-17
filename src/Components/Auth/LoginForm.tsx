@@ -146,7 +146,3 @@ export function LoginForm({ onAuthenticated, needsLink }: LoginFormProps) {
         </React.Fragment>
     );
 }
-
-// function createRegistrationConfig(linkToken: string) {
-//     return 
-// }

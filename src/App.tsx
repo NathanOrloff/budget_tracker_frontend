@@ -21,7 +21,7 @@ function App() {
 
   const { data, error, isLoading } = useAccountIsRegisteredQuery();
   
-  if (checkingSession || isLoading || error) {
+  if (checkingSession || isLoading) {
     // todo: replace with loading spinner
     return buildAppStructure(setIdToken, <div/>);
   }

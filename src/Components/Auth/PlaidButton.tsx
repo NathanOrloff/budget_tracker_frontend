@@ -61,7 +61,7 @@ export default function PlaidButton({ setMode }: PlaidButtonProps) {
 
     return (
         <React.Fragment>
-            <Button variant="contained" onClick={() => open()} disabled={ready}>
+            <Button variant="contained" onClick={() => open()} disabled={!ready}>
                 Link to Bank Account
             </Button>
             { error && (
