@@ -13,7 +13,7 @@ export default function TopPlacesSpentAt({ transactions }: TopPlacesSpentAtProps
     const accumulatedTransactions = transactions.reduce((map, current) => {
         if (current.merchant_name === '') return map;
         const currentTotal = map.get(current.merchant_name) || 0;
-        map.set(current.merchant_name, currentTotal + current.amount);
+        map.set(current.merchant_name, Number(currentTotal.toFixed(2)) + current.amount);
         return map;
     }, new Map());
 
@@ -42,12 +42,13 @@ export default function TopPlacesSpentAt({ transactions }: TopPlacesSpentAtProps
         margin: { right: 5 },
         width: 350,
         height: 350,
-        hideLegend: true,
+        overflowY: 'scroll',
+        flexWrap: 'nowrap'
     };
 
     return (
         <Card variant="outlined" sx={{
-            maxWidth: 400,
+            maxWidth: 550,
             margin: 'auto',
             mt: 4
         }}>

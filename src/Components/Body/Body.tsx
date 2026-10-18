@@ -8,7 +8,7 @@ import { getErrorMessage } from '../utils/error';
 
 export default function Body() {
   const d = new Date();
-  d.setDate(d.getDate() - 90);
+  d.setDate(0); // start of the month
   const { data: thisMonthsTransacs, error, isLoading } = useListTransactionsQuery(d.toISOString().split('T')[0]);
   if (isLoading) {
     return <div>Loading...</div>
