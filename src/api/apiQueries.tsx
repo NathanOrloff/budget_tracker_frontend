@@ -26,6 +26,10 @@ export const budgetAppApi = createApi({
             transformResponse: (res: { data: TransactionOutput[] | null }) => res.data ?? [],
         }),
 
+        getMonthlyTransactionTotals: build.query<Record<string, number>, void>({
+            query: () => `transactions/totals-by-month`
+        }),
+
         accountIsRegistered: build.query<AccountIsRegisteredOutput, void>({
             query: () => `account-is-registered`
         }),
@@ -49,6 +53,7 @@ export const budgetAppApi = createApi({
 
 export const {
     useListTransactionsQuery,
+    useGetMonthlyTransactionTotalsQuery,
     useAccountIsRegisteredQuery,
     useCreateLinkTokenMutation,
     useExchangePublicTokenMutation

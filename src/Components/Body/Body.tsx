@@ -33,7 +33,7 @@ export default function Body() {
   return (
     <Box sx={{ flexGrow: 1, backgroundColor: "#F5F5F5" }}>
       <MonthlyBudget transactions={thisMonthsTransacs}/>
-      <YearlyBudget transactions={thisMonthsTransacs}/>
+      <YearlyBudget/>
       <TopPlacesSpentAt transactions={thisMonthsTransacs}/>
     </Box>
   )

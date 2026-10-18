@@ -12,7 +12,7 @@ export default function MonthlyBudget({ transactions }: MonthlyBudgetProps) {
 
     const accumulatedTransactions = transactions.reduce((map, current) => {
         const currentTotal = map.get(current.personal_finance_category) || 0;
-        map.set(current.personal_finance_category, Number(currentTotal.toFixed(2)) + current.amount);
+        map.set(current.personal_finance_category, currentTotal + current.amount);
         return map;
     }, new Map());
 

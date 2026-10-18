@@ -2,36 +2,29 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Stack from '@mui/material/Stack';
 import { LineChart } from '@mui/x-charts';
-import React from 'react'
-import { TransactionOutput } from '../../../api/types';
+import { useGetMonthlyTransactionTotalsQuery } from '../../../api/apiQueries';
 
-export type YearlyBudgetProps = {
-    transactions: TransactionOutput[]
-}
+export default function YearlyBudget() {
 
-export default function YearlyBudget({ transactions }: YearlyBudgetProps) {
-
-    function dateToMonth(date: Date | string): string {
-        const parsedDate = typeof date === 'string' ? new Date(date) : date;
-        if (isNaN(parsedDate.getTime())) {
-            console.error("Invalid date provided to dateToMonth:", date);
-            return ""; 
-        }
-
-        return parsedDate.toLocaleString('en-US', { month: 'short' });
+    const { data, error, isLoading } = useGetMonthlyTransactionTotalsQuery();
+    if (isLoading || !data) {
+        return <div>Loading...</div>
     }
 
-    const spendingByMonth = transactions.reduce((map, current) => {
-        const currentTotal = map.get(dateToMonth(current.date)) || 0;
-        map.set(dateToMonth(current.date), currentTotal + current.amount);
-        return map
-    }, new Map());
+    const totals = data.data;
+
+    const sortedTotals = Object.entries(totals).sort(([keyA], [keyB]) => {
+        const dateA = new Date(keyA);
+        const dateB = new Date(keyB);
+        
+        return dateA.getTime() - dateB.getTime(); 
+    });
 
     const spendingByMonthDataset: any = [];
-    spendingByMonth.forEach((value, key) => {
+    sortedTotals.forEach((value, _) => {
         spendingByMonthDataset.push({
-            month: key,
-            total: value
+            month: value[0],
+            total: value[1]
         })
     })
 
