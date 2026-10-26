@@ -1,59 +1,19 @@
-import { useEffect, useState } from 'react'
-import { getCurrentSession } from './Components/Auth/authService'
-import { LoginForm } from './Components/Auth/LoginForm';
-import Header from './Components/Header/Header';
-import Footer from './Components/Footer/Footer';
-import Body from './Components/Body/Body';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
-import { useAccountIsRegisteredQuery } from './api/apiQueries';
-
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './Components/Home/Home';
+import Budget from './Components/Budget/Budget';
+import LoginPage from './Components/Auth/LoginPage';
+import ViewPage from './Components/View/ViewPage';
 function App() {
-  const [idToken, setIdToken] = useState<string | null>(null);
-  const [checkingSession, setCheckingSession] = useState(true);
-
-  useEffect(() => {
-    getCurrentSession()
-      .then((token) => setIdToken(token))
-      .catch(() => setIdToken(null))
-      .finally(() => setCheckingSession(false));
-  }, []);
-
-  const { data, error, isLoading } = useAccountIsRegisteredQuery();
-  
-  if (checkingSession || isLoading) {
-    // todo: replace with loading spinner
-    return buildAppStructure(setIdToken, <div/>);
-  }
-
-  if (!idToken) {
-    return buildAppStructure(setIdToken, <LoginForm onAuthenticated={(token) => setIdToken(token)} needsLink={false}/>);
-  }
-  if (!data?.is_registered) {
-    return buildAppStructure(setIdToken, <LoginForm onAuthenticated={(token) => setIdToken(token)} needsLink={true} />);
-  }
-
-  return buildAppStructure(setIdToken, <Body/>);
-}
-
-function buildAppStructure(fn: any, middle: React.JSX.Element): React.JSX.Element {
   return (
-    <div>
-    <CssBaseline />
-    <Container 
-      maxWidth={false}
-      disableGutters 
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column'
-      }}>
-      <Header setIdToken={fn} />
-      {middle}
-      <Footer/>
-    </Container>
-    </div>
-  )
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/view" element={<ViewPage />} />
+      <Route path="/budget" element={<Budget />} />
+      <Route path="/login" element={<LoginPage />} />
+    </Routes>
+  );
 }
+
+
 
 export default App

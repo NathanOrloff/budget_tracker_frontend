@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
-import MonthlyBudget from './Views/MonthlyBudget';
-import YearlyBudget from './Views/YearlyBudget';
-import TopPlacesSpentAt from './Views/TopPlacesSpentAt';
+import MonthlyBudget from './Graphs/MonthlyBudget';
+import YearlyBudget from './Graphs/YearlyBudget';
+import TopPlacesSpentAt from './Graphs/TopPlacesSpentAt';
 import { useListTransactionsQuery } from '../../api/apiQueries';
 import { getErrorMessage } from '../utils/error';
 

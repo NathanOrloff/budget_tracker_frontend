@@ -19,8 +19,10 @@
     "amazon-cognito-identity-js": "^6.3.20",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "react-loader-spinner": "^8.0.2",
     "react-plaid-link": "^5.0.0",
     "react-redux": "^9.3.0",
+    "react-router-dom": "^7.18.4",
     "redux": "^5.0.1"
   },
   "devDependencies": {
