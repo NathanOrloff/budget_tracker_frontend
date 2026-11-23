@@ -29,6 +29,11 @@ export default function TopPlacesSpentAt({ transactions }: TopPlacesSpentAtProps
         '#FFFF00'
     ];
 
+    const formatter = new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+
     const merchant_data: any = [];
     topFiveMerchants.forEach((merchant, i) => {
         merchant_data.push({
@@ -43,7 +48,8 @@ export default function TopPlacesSpentAt({ transactions }: TopPlacesSpentAtProps
         width: 350,
         height: 350,
         overflowY: 'scroll',
-        flexWrap: 'nowrap'
+        flexWrap: 'nowrap',
+        
     };
 
     return (
@@ -53,7 +59,13 @@ export default function TopPlacesSpentAt({ transactions }: TopPlacesSpentAtProps
             mt: 4
         }}>
             <PieChart
-                series={[{ innerRadius: 100, outerRadius: 150, data: merchant_data, arcLabel: 'value' }]}
+                series={[{ 
+                    innerRadius: 100, 
+                    outerRadius: 150, 
+                    data: merchant_data, 
+                    arcLabel: (item) => formatter.format(item.value),  
+                    valueFormatter: (item) => formatter.format(item.value) 
+                }]}
                 {...settings}
             />
         </Card>

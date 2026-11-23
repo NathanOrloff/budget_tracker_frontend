@@ -1,6 +1,4 @@
-import React from 'react'
 import { TransactionOutput } from '../../../api/types'
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import { BarChart } from '@mui/x-charts/BarChart';
 
@@ -11,6 +9,7 @@ export type MonthlyBudgetProps = {
 export default function MonthlyBudget({ transactions }: MonthlyBudgetProps) {
 
     const accumulatedTransactions = transactions.reduce((map, current) => {
+        if (current.amount < 0) return map;
         const currentTotal = map.get(current.personal_finance_category) || 0;
         map.set(current.personal_finance_category, currentTotal + current.amount);
         return map;

@@ -13,12 +13,13 @@ export default function YearlyBudget() {
 
     const totals = data.data;
 
-    const sortedTotals = Object.entries(totals).sort(([keyA], [keyB]) => {
-        const dateA = new Date(keyA);
-        const dateB = new Date(keyB);
-        
-        return dateA.getTime() - dateB.getTime(); 
-    });
+    const monthOrder: Record<string, number> = {
+        Jan: 0, Feb: 1, Mar: 2, Apr: 3,
+        May: 4, Jun: 5, Jul: 6, Aug: 7,
+        Sep: 8, Oct: 9, Nov: 10, Dec: 11
+    };
+
+    const sortedTotals = Object.entries(totals).sort(([keyA], [keyB]) => monthOrder[keyA] - monthOrder[keyB]);
 
     const spendingByMonthDataset: any = [];
     sortedTotals.forEach((value, _) => {
@@ -48,7 +49,7 @@ export default function YearlyBudget() {
                         {
                             dataKey: 'total',
                             label: 'Spending by month',
-                            curve: 'natural',
+                            curve: 'linear',
                             showMark: true,
                             shape: 'circle',
                         },
