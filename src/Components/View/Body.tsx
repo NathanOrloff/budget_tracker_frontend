@@ -13,7 +13,7 @@ export default function Body() {
   if (isLoading) {
     return <div>Loading...</div>
   }
-
+  
   if (error) {
     return (
       <Alert severity="error">

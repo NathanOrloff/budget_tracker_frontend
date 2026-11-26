@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { getCurrentUserAttributes, signOut } from '../../Auth/authService';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
+import Menu from './Menu';
 
 type HeaderParams = {
   setIdToken: (token: string | null) => void,
@@ -38,15 +39,7 @@ export default function Header({ setIdToken }: HeaderParams) {
     <Box sx={{ flexShrink: 0 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Menu/>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Budget App
           </Typography>

@@ -23,14 +23,15 @@ export default function Home() {
         return BuildAppStructure(setIdToken, <Spinner/>);
     }
 
-    if (!idToken) {
-        navigate(LOGIN, { replace: true });
-    } else {
-        navigate(VIEW, { replace: true });
-    }
+    useEffect(() => {
+        if (!idToken) {
+            navigate(LOGIN, { replace: true });
+        } else {
+            navigate(VIEW, { replace: true });
+        }
+    }, [idToken])
+    
 
     // shouldn't reach this
     return BuildAppStructure(setIdToken, <Spinner/>);
 }
-
-
