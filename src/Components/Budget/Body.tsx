@@ -17,31 +17,36 @@ import Paper from '@mui/material/Paper';
 import React from 'react'
 import { styled } from '@mui/material/styles'
 import Stack from '@mui/material/Stack'
+import { PERSONAL_FINANCE_CATEGORIES } from '../Utils/constants'
+
+type BudgetItem = {
+  category: string,
+  amount: number
+}
 
 export default function Body() {
   const [category, setCategory] = React.useState('');
+  const [amount, setAmount] = React.useState<number>(0);
+  const [budget, setBudget] = React.useState<BudgetItem[]>([]);
 
-  const handleChange = (event: any) => {
+  const handleCategoryChange = (event: any) => {
     setCategory(event.target.value as string);
   };
 
-  function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-  ) {
-    return { name, calories, fat, carbs, protein };
+  const handleAmountChange = (event: any) => {
+    setAmount(event.target.value as number);
   }
 
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
+  const handleAddClick = (event: any) => {
+    if (category === '') return;
+    setBudget([...budget, { category: category, amount: 0 }]);
+    setCategory('');
+    setAmount(0);
+  }
+
+  const handleRemoveClick = (indexToRemove: number) => {
+    setBudget((prevRows) => prevRows.filter((_, idx) => idx !== indexToRemove));
+  }
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -89,11 +94,11 @@ export default function Body() {
                   id="category-input"
                   value={category}
                   label="Category"
-                  onChange={handleChange}
+                  onChange={handleCategoryChange}
                 >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  {PERSONAL_FINANCE_CATEGORIES.map((row, index) => (
+                    <MenuItem value={index}>{row}</MenuItem>
+                  ))}
                 </Select>
               </FormControl>
 
@@ -102,6 +107,8 @@ export default function Body() {
                 label="Amount"
                 variant="outlined"
                 type="number"
+                value={amount}
+                onChange={handleAmountChange}
                 slotProps={{
                   input: {
                     startAdornment: <InputAdornment position="start">$</InputAdornment>,
@@ -113,32 +120,28 @@ export default function Body() {
                 }}
               />
 
-              <Button variant="contained">Add</Button>
+              <Button variant="contained" onClick={handleAddClick}>Add</Button>
             </Box>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <StyledTableRow>
-                    <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-                    <StyledTableCell align="right">Calories</StyledTableCell>
-                    <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-                    <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-                    <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+                    <StyledTableCell>Category</StyledTableCell>
+                    <StyledTableCell align="right">Amount</StyledTableCell>
+                    <StyledTableCell align="right"></StyledTableCell>
                   </StyledTableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row) => (
+                  {budget.map((row, index) => (
                     <StyledTableRow
-                      key={row.name}
+                      key={row.category}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                       <StyledTableCell component="th" scope="row">
-                        {row.name}
+                        {row.category}
                       </StyledTableCell>
-                      <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                      <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                      <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                      <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                      <StyledTableCell align="right">{row.amount}</StyledTableCell>
+                      <StyledTableCell align="right"><Button onClick={() => handleRemoveClick(index)} variant="contained" color='error' sx={{ width: 30 }}>X</Button></StyledTableCell>
                     </StyledTableRow>
                   ))}
                 </TableBody>
