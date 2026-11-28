@@ -28,6 +28,5 @@ export default function ViewPage() {
         navigate(LOGIN, { replace: true });
     } 
 
-    // shouldn't reach this
     return BuildAppStructure(setIdToken, <Body/>);
 }

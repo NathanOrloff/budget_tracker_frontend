@@ -16,6 +16,10 @@ export default function Home() {
         .then((token) => setIdToken(token))
         .catch(() => setIdToken(null))
         .finally(() => setCheckingSession(false));
+
+        if (!idToken) {
+            navigate(LOGIN, { replace: true });
+        } 
     }, []);
 
     
@@ -23,14 +27,7 @@ export default function Home() {
         return BuildAppStructure(setIdToken, <Spinner/>);
     }
 
-    useEffect(() => {
-        if (!idToken) {
-            navigate(LOGIN, { replace: true });
-        } else {
-            navigate(VIEW, { replace: true });
-        }
-    }, [idToken])
-    
+    navigate(VIEW, { replace: true });
 
     // shouldn't reach this
     return BuildAppStructure(setIdToken, <Spinner/>);
